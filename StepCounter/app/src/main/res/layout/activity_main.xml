@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="0dp"
+    android:minHeight="250dp"
+    android:padding="0dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="331dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Somewhat Accurate Step Tracker"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Somewhat Accurate Step Tracker" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="315dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:layout_marginBottom="96dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintVertical_bias="0.0">
+
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/innerConstraint"
+            android:layout_width="331dp"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp"
+            android:orientation="vertical"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/stepView"
+                android:layout_width="331dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/holo_blue_bright"
+                android:paddingTop="6dp"
+                android:text="Hello! Please walk"
+                android:textAlignment="center"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Number Of Steps" />
+
+
+            <com.ubcomp.algendel.stepcounter.VisualizationView
+                android:id="@+id/drawView"
+                android:layout_width="match_parent"
+                android:layout_height="580dp"
+                android:background="@android:color/holo_blue_bright"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/stepView" />
+
+
+            <TextView
+                android:id="@+id/textTitleDebug"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:ems="10"
+
+                android:text="Debug View"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/drawView" />
+
+
+            <TextView
+                android:id="@+id/stepViewAndroid"
+                android:layout_width="331dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginEnd="8dp"
+
+                android:layout_marginStart="8dp"
+                android:text="TextView"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textTitleDebug"
+                tools:text="Number Of Steps per Android step counter" />
+
+
+            <TextView
+                android:id="@+id/settings"
+                android:layout_width="331dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+
+                android:text="Adjust Settings"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/stepViewAndroid"
+                tools:text="Adjust Settings" />
+
+
+            <TextView
+                android:id="@+id/txtVelocityAtPoint"
+                android:layout_width="331dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="32dp"
+                android:layout_marginEnd="8dp"
+
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Magnitude Above Threshold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtVelocityAvg"
+                tools:text="Magnitude Above Threshold" />
+
+            <TextView
+                android:id="@+id/txtVelocityAvg"
+                android:layout_width="331dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+
+                android:text="Magnitude over threshold "
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/graph_smooth"
+                tools:text="Magnitude over threshold" />
+
+
+            <Button
+                android:id="@+id/btnReset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Reset"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutSettings1" />
+
+            <Button
+                android:id="@+id/btnDoStep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Step"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintTop_toBottomOf="@+id/layoutSettings3" />
+
+
+            <TextView
+                android:id="@+id/textTitleRaw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Raw Graph"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnDoStep" />
+
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/graph_raw"
+                android:layout_width="317dp"
+                android:layout_height="179dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textTitleRaw" />
+
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/graph_smooth"
+                android:layout_width="317dp"
+                android:layout_height="180dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textTitleSmooth" />
+
+            <TextView
+                android:id="@+id/textTitleSmooth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:text="Smoothed Graph"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/graph_raw" />
+
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/layoutSettings1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/settings">
+
+                <TextView
+                    android:id="@+id/txtsmoothingWindow1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AcsSmthWin"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="AcsSmthWin" />
+
+
+                />
+
+                <EditText
+                    android:id="@+id/txtDebugAcsSmoothingWindow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+
+                    android:hint="test123"
+                    android:inputType="text"
+                    android:text="40"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtsmoothingWindow1"
+                    tools:text="40" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/layoutSettings2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toEndOf="@+id/layoutSettings1"
+                app:layout_constraintTop_toBottomOf="@+id/settings">
+
+                <TextView
+                    android:id="@+id/txtsmoothingWindow2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="VctSmthWin"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="VctSmthWin" />
+
+
+                />
+
+                <EditText
+                    android:id="@+id/txtDebugVctSmoothingWindow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+
+                    android:hint="vel sm"
+                    android:inputType="text"
+                    android:text="10"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtsmoothingWindow2"
+                    tools:text="40" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/layoutSettings25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toEndOf="@+id/layoutSettings2"
+                app:layout_constraintTop_toBottomOf="@+id/settings">
+
+                <TextView
+                    android:id="@+id/txtThreshold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thrsh"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Thrsh" />
+
+
+                />
+
+                <EditText
+                    android:id="@+id/txtDebugThrshold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+
+                    android:text="9.1"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    app:layout_constraintEnd_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtThreshold" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/layoutSettings3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toEndOf="@+id/layoutSettings25"
+                app:layout_constraintTop_toBottomOf="@+id/settings">
+
+                <TextView
+                    android:id="@+id/txtStepsPerBranch3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="stepsPerBranch"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent"
+                    tools:text="StPerLevel" />
+
+
+                />
+
+                <EditText
+                    android:id="@+id/txtStepsPerLevel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+
+                    android:text="1"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    app:layout_constraintEnd_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtStepsPerBranch3" />
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
