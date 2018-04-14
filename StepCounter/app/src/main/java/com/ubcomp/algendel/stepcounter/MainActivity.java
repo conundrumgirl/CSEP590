@@ -113,6 +113,7 @@ public class MainActivity extends Activity implements SensorEventListener {
         numSteps = 0;
         androidCounterOffset = 0;
         setConstsFromConfig();
+        stepDetector = new StepDetector();
         stepCount.setText(TEXT_NUM_STEPS + numSteps);
         ((TextView) findViewById(R.id.txtVelocityAtPoint)).setText("");
         this.drawView.reset();
