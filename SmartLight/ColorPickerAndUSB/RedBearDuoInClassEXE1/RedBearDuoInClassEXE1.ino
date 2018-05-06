@@ -60,9 +60,9 @@ int redPin = D2;
 int greenPin = D1;
 int bluePin = D0;
 
-int rx;
-int gx;
-int bx;
+//int rx;
+//int gx;
+//int bx;
 
 
 int potPin = A0;
@@ -70,15 +70,15 @@ int photoPin = A1;
 
 
 
-int potValue;
+//int potValue;
 int photoValue;
-float newPhotoValue;
+//float newPhotoValue;
 
 
 
-int writeValue_red; //declare variable to send to the red LED
-int writeValue_green; //declare variable to send to the green LED
-int writeValue_blue; //declare variable to send to the blue LED
+//int writeValue_red; //declare variable to send to the red LED
+//int writeValue_green; //declare variable to send to the green LED
+//int writeValue_blue; //declare variable to send to the blue LED
 
 
 /**
@@ -103,11 +103,16 @@ int bleWriteCallback(uint16_t value_handle, uint8_t *buffer, uint16_t size) {
     }
     Serial.println(" ");
 
+
+
+
+
     /* Process the data
        TODO: Receive the data sent from other BLE-abled devices (e.g., Android app)
        and process the data for different purposes (digital write, digital read, analog read, PWM write)
     */
-    if (receive_data[0] == 0x01) { // Command is to control digital out pin
+    //digital
+    /*if (receive_data[0] == 0x01) { // Command is to control digital out pin
       if (receive_data[1] == 0x01)
         digitalWrite(DIGITAL_OUT_PIN, HIGH);
       else
@@ -115,9 +120,57 @@ int bleWriteCallback(uint16_t value_handle, uint8_t *buffer, uint16_t size) {
     }
     else if (receive_data[0] == 0x04) { // Command is to initialize all.
       digitalWrite(DIGITAL_OUT_PIN, LOW);
+    }*/
+
+   /* Process the data
+     * TODO: Receive the data sent from other BLE-abled devices (e.g., Android app)
+     * and process the data for different purposes (digital write, digital read, analog read, PWM write)
+     */
+    if(receive_data[0] == 0x02) { // Command is to control PWM pin
+      int data = 255-(receive_data[2]& 0xFF);
+
+      if(receive_data[1] == 0x00) { // Command is to control PWM pin
+        printDebug(data, "red value");
+        analogWrite(redPin, data);
+
+      }
+      if(receive_data[1] == 0x01) { // Command is to control PWM pin
+         printDebug(data, "green value");
+        analogWrite(greenPin, data);
+      }
+
+      if(receive_data[1] == 0x02) { // Command is to control PWM pin
+         printDebug(data, "blue value");
+        analogWrite(bluePin, data);
+      }
+
+
+
+
+  //Serial.println(newPhotoValue);
+     // analogWrite(redPin, 255-(receive_data[1]& 0xFF));
+      //analogWrite(greenPin, 255-(receive_data[2]& 0xFF));
+      //analogWrite(bluePin, 255-(receive_data[3]& 0xFF));
+
     }
+    else if (receive_data[0] == 0x04) { // Command is to initialize all.
+      analogWrite(redPin, 255);
+      analogWrite(greenPin, 255);
+      analogWrite(bluePin, 255);
+    }
+
+
+
+
   }
   return 0;
+}
+
+void printDebug(int number, char message[]) {
+Serial.print(message);
+//strcpy(message, "Hello, world!")
+//printf("%s\n", message);
+Serial.println(number);
 }
 
 void setup() {
@@ -158,22 +211,39 @@ void setup() {
   pinMode(photoPin, INPUT); //set potentiometer for green LED as input
 
 
-
-
-
 }
 
 void loop() {
-  potValue = analogRead(potPin);
-  photoValue = analogRead(photoPin);
 
-  Serial.print("Raw photocell value:");
-  Serial.println(photoValue);
+  photoValue = getAdjustedPhotoValue(analogRead(photoPin));
+  //float newPhotoValue = (map(photoValue, 1000, 3900, 100, 0)) / 100.0;
+
+  //photoValue = constrain(newPhotoValue, 0, 255);
+  //doColorLoop(potPin, photoPin);
+  delay(200);
+}
+
+/* Color setting aux functions*/
+
+int getAdjustedPhotoValue(int rawPhotoValue) {
+   float newPhotoValue = (map(rawPhotoValue, 1000, 3900, 100, 0)) / 100.0;
+
+  newPhotoValue = constrain(newPhotoValue, 0, 255);
+  return newPhotoValue;
+}
+
+void doColorLoop(int _potPin, int photoValue) {
+  int potValue = analogRead(_potPin);
+
+
+  //Serial.print("Raw photocell value:");
+  //Serial.println(photoValue);
 
   getColorFromPotentiometer(potValue, photoValue);
 
-  Serial.print("Original photo value");
-  Serial.println(photoValue);
+  //Serial.print("Original photo value");
+  //Serial.println(photoValue);
+
 }
 
 void getColorFromPotentiometer(int potValue, int photoValue) {
@@ -196,29 +266,31 @@ void getColorFromPotentiometer(int potValue, int photoValue) {
 }
 
 void setColor(int r, int g, int b, int photoValue) {
-  newPhotoValue = (map(photoValue, 1000, 3900, 100, 0)) / 100.0;
-  if (newPhotoValue < 0) {
-    newPhotoValue = 0;
-  }
-  if (newPhotoValue > 100) {
-    newPhotoValue = 100;
-  }
+ // float newPhotoValue = (map(photoValue, 1000, 3900, 100, 0)) / 100.0;
 
-  Serial.print("New photo value");
-  Serial.println(newPhotoValue);
+  //newPhotoValue = constrain(newPhotoValue, 0, 255);
 
-  rx = r * newPhotoValue;
-  gx = g * newPhotoValue;
-  bx = b * newPhotoValue;
-  Serial.println(rx);
-  writeValue_red = 255 - rx ;       // Red from off to full
-  writeValue_green = 255 - gx;            // Green off
-  writeValue_blue = 255 - bx;
+  //Serial.print("New photo value");
+  //Serial.println(newPhotoValue);
 
-  Serial.print("writeValue_red" +  writeValue_red);
-  Serial.print("newPhoto");
-  Serial.println(newPhotoValue);
+  /*int rx = r * photoValue;
+  int gx = g * photoValue;
+  int bx = b * photoValue;
+
+  int writeValue_red = 255 - rx ;       // Red from off to full
+  int writeValue_green = 255 - gx;            // Green off
+  int writeValue_blue = 255 - bx;
+
   analogWrite(redPin, writeValue_red);
   analogWrite(greenPin, writeValue_green);
-  analogWrite(bluePin, writeValue_blue);
+  analogWrite(bluePin, writeValue_blue);*/
+  //setColorIndividual(int redPin, int r, int photoValue );
+  // setColorIndividual(int greenPin, int g, int photoValue );
+  //  setColorIndividual(int redPin, int b, int photoValue );
+}
+
+void setColorIndividual(int pin, int color, int photoValue ) {
+  int colorAdjusted = color * photoValue;
+  int writeValue_color = 255 - colorAdjusted ;
+  analogWrite(pin, writeValue_color);
 }
