@@ -130,12 +130,12 @@ int bleWriteCallback(uint16_t value_handle, uint8_t *buffer, uint16_t size) {
       int data = 255-(receive_data[2]& 0xFF);
 
       if(receive_data[1] == 0x00) { // Command is to control PWM pin
-        printDebug(data, "red value");
+        //printDebug(data, "red value");
         analogWrite(redPin, data);
 
       }
       if(receive_data[1] == 0x01) { // Command is to control PWM pin
-         printDebug(data, "green value");
+         //printDebug(data, "green value");
         analogWrite(greenPin, data);
       }
 
